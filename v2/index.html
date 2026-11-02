@@ -241,6 +241,10 @@
   .memory-text { font-size: 15px; line-height: 1.8; color: #f0e6c8; font-style: italic; text-align: center; }
   .memory-next { display: block; margin: 12px auto 0; background: none; border: none; color: var(--cream-dim);
     font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 2px; cursor: pointer; }
+  .script-text { white-space: pre-line; text-align: left; font-size: 15px; line-height: 1.75; color: #f0e6c8;
+    font-style: italic; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(212,175,55,0.2); }
+  .script-credit { display: block; margin-top: 16px; font-style: normal; font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 1px; color: var(--gold); text-align: center; line-height: 1.8; }
   .night-status { font-size: 16px; line-height: 1.7; color: #f0e6c8; text-align: center; margin-bottom: 10px; }
   .night-plan { font-size: 12px; color: rgba(232,220,200,0.5); text-align: center; letter-spacing: 1px; font-family: 'Cinzel', serif; margin-bottom: 8px; }
 
@@ -339,6 +343,62 @@
       <div class="ticket-q">¿Qué vas a hacer hoy con el ticket?<br>Empezando ahora.</div>
       <div class="ticket-sub">Abre la mano izquierda: te lo han puesto ahí, a ti, entre trillones.<br>Una sola condición: no vivirlo a medias, ni desde la barrera.</div>
       <button class="btn-ticket" id="btn-ticket" onclick="toggleTicket()">✋ Sí. Hoy uso el ticket</button>
+      <button class="memory-next" onclick="toggleScript()" id="script-toggle">leer la visualización de Cat ↓</button>
+      <div id="ticket-script" class="script-text" style="display:none">You are in a room. You are alone.
+The lights are off.
+You can't see or hear anything.
+You've been waiting here for a while. For a long, long time.
+You've been waiting for a ticket.
+Not just any ticket.
+A ticket that gives you the chance to experience life.
+
+The odds of getting this ticket?
+Something like 400 trillion to one.
+
+But today, there is a knock at your door.
+
+"Congratulations.
+You have been chosen.
+You get to experience life.
+
+There's something you should know though.
+It's not going to be easy.
+There will be sadness. Pain. Embarrassment. Heartbreak.
+A grief that leaves a hole in your heart.
+
+But…
+There will also be joy.
+Wonder.
+Excitement.
+There will be all-encompassing love.
+
+You'll see colours and hear sounds.
+You'll swim in the ocean and feel the icy water against your skin.
+You'll cry because something is so unbelievably beautiful.
+You'll feel the rhythm of music vibrating through your body.
+You'll get to experience what it means to be ALIVE.
+
+But there is 1 condition.
+You can't half-arse it.
+You don't get to go and sit on the sidelines and watch life happen.
+Because there are so many people who want this ticket!
+And I'm giving it to you.
+
+So you have a responsibility.
+To yourself.
+To the people waiting behind you.
+To the people looking down at you who would give anything to have this chance again.
+
+So you have to grab it and squeeze every bit of love, joy, and aliveness out of it that you can."
+
+I want you to feel your left hand opening.
+And I place this ticket inside your hand.
+
+Now ask yourself:
+What are you going to do with it?
+
+Starting right now.
+<span class="script-credit">— Cat McCarthy · Udara Sunday Festival, Ubud · 1 nov 2026 · compartido con su permiso 🙏</span></div>
     </div>
 
     <div class="card">
@@ -730,6 +790,13 @@ function renderTicket() {
 function toggleTicket() {
   today.ticketMorning = !today.ticketMorning;
   saveToday(); renderTicket();
+}
+
+function toggleScript() {
+  const s = document.getElementById('ticket-script');
+  const open = s.style.display === 'none';
+  s.style.display = open ? 'block' : 'none';
+  document.getElementById('script-toggle').textContent = open ? 'cerrar ↑' : 'leer la visualización de Cat ↓';
 }
 
 function renderMedCheck() {
