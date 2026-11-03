@@ -274,6 +274,11 @@
       <div class="affirm-text" id="affirm-text">"Estamos bendecidísimos. Todo nos sale bien."</div>
     </div>
 
+    <div class="card" style="text-align:center">
+      <div class="card-head" style="justify-content:center">Las dos cosas</div>
+      <div class="memory-text" style="font-style:normal; font-size:17px">💛 Adora a Fabio<br>🧘 Estate aquí y ahora</div>
+    </div>
+
     <div class="card">
       <div class="card-head"><span>⚡</span> Vibración de hoy <span class="vib-tag" id="vib-tag">–</span></div>
       <div class="vib-bar"><div class="vib-fill" id="vib-fill" style="width:40%"></div></div>
@@ -512,6 +517,10 @@ Starting right now.
         <button class="sleep-btn" id="tk-barrera" onclick="setTicketNight('barrera')">🪑 Barrera</button>
       </div>
       <div class="hint" style="margin-top:8px; font-size:12px">Sin juicio. Mañana te vuelven a dar el ticket.</div>
+      <div class="check-row" style="margin-top:6px" onclick="toggleNight('fabioDone')">
+        <div class="check-circle" id="check-fabioDone"></div>
+        <span class="check-label">💛 Hoy he adorado a Fabio</span>
+      </div>
     </div>
 
     <div class="card">
@@ -598,12 +607,18 @@ const AFFIRMATIONS = [
   "Mi responsabilidad: conmigo, con los que esperan detrás y con los que me miran desde arriba.",
   "Exprime el ticket: todo el amor, la alegría y la vida que puedas.",
   "¿Qué vas a hacer con él? Empezando ahora.",
+  "Cuidar a Fabio es cuidarme a mí.",
+  "Voy a ser más rico en el cementerio. Hoy pago la cena y dejo propina.",
+  "Que gane el bien dentro de mí. Ahí empieza todo.",
+  "Está aquí ahora.",
 ];
 
 const MEMORIES = [
   "Entrando de la mano de tu padre en tu boda. Todos mirándote felices. Suena Young and Beautiful.",
   "El día de las setas: a los cinco minutos, llorando de alegría. «Todo nos sale bien. Estamos bendecidos.»",
   "Lisboa: bailando con Fabio y vuestro hijo o hija, con tus padres, tus abuelos, tus amigos. Todo el universo celebrando.",
+  "Gili, 12 de octubre: le cogías la mano a Fabio y era la mano de tu madre desde la cuna. Tu segunda boda.",
+  "Acurrucado en el pecho de Fabio, como el pequeño, llorando. Él también te cuida.",
   "La llamada de Anderson en plena madrugada, el último día. Parecía imposible, y entraste.",
   "La beca Fulbright, cuando ya parecía imposible.",
   "Udara, 1 de noviembre: en una sala oscura, entre trillones, te dieron el ticket a ti.",
@@ -636,7 +651,7 @@ const emptyDay = () => ({
   gbNote: '', gbNight: '', bestMoment: '',
   gbCount: 0,
   ticketMorning: false, meditationDone: false,
-  ticketNight: '', phoneOff: false, lightsOff: false,
+  ticketNight: '', phoneOff: false, lightsOff: false, fabioDone: false,
 });
 
 let today = emptyDay();
@@ -941,7 +956,7 @@ function loadNightFields() {
 }
 
 function renderNightChecks() {
-  ['phoneOff','lightsOff'].forEach(f => {
+  ['phoneOff','lightsOff','fabioDone'].forEach(f => {
     const c = document.getElementById('check-' + f);
     c.className = 'check-circle' + (today[f] ? ' on' : '');
     c.textContent = today[f] ? '✓' : '';
@@ -994,6 +1009,7 @@ function renderDiary() {
       ${d.ticketMorning ? `<div class="diary-row"><strong>🎟️ Ticket:</strong> activado por la mañana</div>` : ''}
       ${d.meditationDone ? `<div class="diary-row"><strong>🧘 Meditación:</strong> hecha</div>` : ''}
       ${d.ticketNight ? `<div class="diary-row"><strong>Campo o barrera:</strong> ${esc(d.ticketNight)}</div>` : ''}
+      ${d.fabioDone ? `<div class="diary-row"><strong>💛 Fabio:</strong> adorado</div>` : ''}
       ${(d.phoneOff || d.lightsOff) ? `<div class="diary-row"><strong>Noche:</strong> ${d.phoneOff ? '📵 móvil fuera ' : ''}${d.lightsOff ? '🌑 luz antes de la 1' : ''}</div>` : ''}
       ${d.gratitude   ? `<div class="diary-row"><strong>Gratitud:</strong> ${esc(d.gratitude)}</div>` : ''}
       ${d.quien       ? `<div class="diary-row"><strong>Riego:</strong> ${esc(d.quien)}</div>` : ''}
@@ -1016,7 +1032,7 @@ function exportCSV() {
   if (!days.length) { alert('Aún no hay entradas en tu diario.'); return; }
 
   const headers = ['Fecha','Sueño','Gratitud','Riego','Intención','GB Protocolo','GB Noche','Mejor Momento','GB Count',
-                   'Ticket mañana','Meditación','Campo o barrera','Móvil fuera','Luz antes de la 1'];
+                   'Ticket mañana','Meditación','Campo o barrera','Móvil fuera','Luz antes de la 1','Fabio adorado'];
   const yn = b => b ? 'sí' : '';
   const rows = days.map(d => [
     d.date || '',
@@ -1028,7 +1044,7 @@ function exportCSV() {
     d.gbNight || '',
     d.bestMoment || '',
     d.gbCount || 0,
-    yn(d.ticketMorning), yn(d.meditationDone), d.ticketNight || '', yn(d.phoneOff), yn(d.lightsOff),
+    yn(d.ticketMorning), yn(d.meditationDone), d.ticketNight || '', yn(d.phoneOff), yn(d.lightsOff), yn(d.fabioDone),
   ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
 
   const csv = [headers.join(','), ...rows].join('\n');
